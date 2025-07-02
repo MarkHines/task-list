@@ -1,7 +1,20 @@
 import express from "express";
 const app = express();
 export default app;
+import getUserByToken from '#middleware/getUserFromToken'
+import tasksRouter from "#api/task";
 
+// Parse the request payload and create request.body
+app.use(express.json())
+app.use(getUserByToken);
+
+
+import usersRouter from "#api/users";
+app.use(`/users`, usersRouter)
+
+app.use(`/tasks`, tasksRouter)
+
+//PostgreSQL Error Handling
 app.use((err, req, res, next) => {
   switch (err.code) {
     // Invalid type
@@ -17,6 +30,8 @@ app.use((err, req, res, next) => {
   }
 });
 
+
+// Generic Error Handling
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send("Sorry! Something went wrong.");
