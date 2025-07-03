@@ -19,3 +19,30 @@ export const getTasksByUserId = async(userId) => {
   const {rows: tasks } = await db.query(sql, [userId])
   return tasks
 }
+export const getTaskById = async(id) => {
+  const sql = `
+    SELECT * FROM tasks 
+    WHERE id = $1;
+  `;
+  const { rows: [task] } = await db.query(sql, [id]);
+  return task;
+}
+
+export const updateTaskById = async (title, done, id) => {
+  const sql = `
+    UPDATE tasks
+    SET title = $1, done = $2
+    WHERE id = $3
+    RETURNING*
+  `;
+  const { rows: [task] } = await db.query(sql,[title, done, id])
+  return task
+}
+
+export const deleteTaskById = async(id) => {
+  const sql = `
+    DELETE FROM tasks
+    WHERE id = $1
+  `;
+  const { rows } = await db.query(sql,[id])
+}

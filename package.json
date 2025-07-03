@@ -5,7 +5,7 @@
     "#*": "./*.js"
   },
   "scripts": {
-    "start": "node --env-file=.env server.js",
+    "start": "nodemon --env-file=.env server.js",
     "dev": "node --watch --env-file=.env server.js",
     "test": "vitest --bail 1",
     "db:schema": "psql -d tasklist -f db/schema.sql",
@@ -16,6 +16,7 @@
     "bcrypt": "^5.1.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.10",
     "pg": "^8.14.1"
   },
   "devDependencies": {

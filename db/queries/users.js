@@ -2,7 +2,6 @@ import db from '#db/client';
 import bcrypt from 'bcrypt'
 
 export const createUser = async(username, password) => {
-  console.log(`CREATING USER`)
   const sql = `
     INSERT INTO users (username, password)
     VALUES ($1, $2)
@@ -15,7 +14,6 @@ export const createUser = async(username, password) => {
 }
 
 export const getUserByUsernameAndPassword = async (username, password) => {
-  //console.log(username, password)
   const sql = `
     SELECT * FROM users
     WHERE username = $1
@@ -25,9 +23,6 @@ export const getUserByUsernameAndPassword = async (username, password) => {
   if(!user) return null;
 
   const isValid = await bcrypt.compare(password, user.password);
-  console.log(isValid)
-  console.log(password)
-  console.log(user.password)
   if(!isValid) return null;
   return user;
 }
